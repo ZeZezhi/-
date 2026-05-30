@@ -118,8 +118,20 @@ class ExamSys:
         print("========================")
 
     def generate_exam_arrangement(self):
-        """生成考试安排表（待实现）。"""
-        pass
+        """
+        随机打乱学生顺序后分配座位号，
+        生成「考试安排表.txt」，格式：座位号,姓名,学号。
+        """
+        shuffled = random.sample(self.students, len(self.students))
+        self.exam_seats = [(i + 1, student) for i, student in enumerate(shuffled)]
+
+        output_file = "考试安排表.txt"
+        with open(output_file, "w", encoding="utf-8") as f:
+            for seat_num, student in self.exam_seats:
+                f.write(f"{seat_num},{student.name},{student.student_id}\n")
+
+        print(f"[OK] 考试安排表已生成，共 {len(self.exam_seats)} 个座位。")
+        print(f"  文件路径: {os.path.abspath(output_file)}")
 
     def generate_admission_tickets(self):
         """生成准考证文件（待实现）。"""
