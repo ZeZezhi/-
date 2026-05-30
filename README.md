@@ -1,4 +1,4 @@
-# ZeZezhi-学号-第二次人工智能编程作业
+# 刘桢-25361124-第二次人工智能编程作业
 
 仓库链接: https://github.com/ZeZezhi/-.git
 
