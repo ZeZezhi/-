@@ -4,6 +4,7 @@ exam_system.py —— 考试系统模块
 """
 
 import os
+import random
 
 from student import Student
 
@@ -89,8 +90,32 @@ class ExamSys:
         print(f"[!] 未找到学号为「{student_id}」的学生，请检查学号是否输入正确！")
 
     def random_roll_call(self):
-        """随机点名（待实现）。"""
-        pass
+        """
+        随机抽取不重复学生进行点名。
+        try-except 三层异常保护：非整数输入 / 数量≤0 / 超过学生总数。
+        """
+        try:
+            count_str = input("请输入要随机点名的学生数量：").strip()
+            count = int(count_str)
+
+            if count <= 0:
+                print("[!] 点名数量必须大于 0，请重新输入！")
+                return
+
+            if count > len(self.students):
+                print(f"[!] 点名数量（{count}）超过了学生总人数（{len(self.students)}），请重新输入！")
+                return
+
+        except ValueError:
+            print("[!] 输入不合法！请确保输入的是一个整数。")
+            return
+
+        selected = random.sample(self.students, count)
+
+        print("\n===== 随机点名结果 =====")
+        for i, student in enumerate(selected, start=1):
+            print(f"{i}. {student.name}\t{student.student_id}")
+        print("========================")
 
     def generate_exam_arrangement(self):
         """生成考试安排表（待实现）。"""
