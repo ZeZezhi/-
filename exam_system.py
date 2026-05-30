@@ -77,8 +77,16 @@ class ExamSys:
         print("0. 退出系统")
 
     def find_student(self):
-        """查询学生信息（待实现）。"""
-        pass
+        """根据学号查询并显示学生信息，学号不存在时给出友好提示。"""
+        student_id = input("请输入要查询的学生学号：").strip()
+
+        for student in self.students:
+            if student.student_id == student_id:
+                print("\n[OK] 查询结果：")
+                print(student)
+                return
+
+        print(f"[!] 未找到学号为「{student_id}」的学生，请检查学号是否输入正确！")
 
     def random_roll_call(self):
         """随机点名（待实现）。"""
