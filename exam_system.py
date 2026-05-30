@@ -134,5 +134,29 @@ class ExamSys:
         print(f"  文件路径: {os.path.abspath(output_file)}")
 
     def generate_admission_tickets(self):
-        """生成准考证文件（待实现）。"""
-        pass
+        """
+        在「准考证」文件夹下为每位学生生成独立的准考证文件（01.txt, 02.txt...）。
+        若文件夹已存在则先清空旧文件；若未生成考试安排表则自动生成。
+        """
+        if not self.exam_seats:
+            print("[!] 尚未生成考试安排表，正在自动生成……")
+            self.generate_exam_arrangement()
+
+        ticket_dir = "准考证"
+
+        if os.path.exists(ticket_dir):
+            for old_file in os.listdir(ticket_dir):
+                old_path = os.path.join(ticket_dir, old_file)
+                if os.path.isfile(old_path):
+                    os.remove(old_path)
+        else:
+            os.mkdir(ticket_dir)
+
+        for seat_num, student in self.exam_seats:
+            filename = f"{seat_num:02d}.txt"
+            filepath = os.path.join(ticket_dir, filename)
+            with open(filepath, "w", encoding="utf-8") as f:
+                f.write(student.to_ticket_text(seat_num))
+
+        print(f"[OK] 准考证已全部生成，共 {len(self.exam_seats)} 份。")
+        print(f"  存放目录: {os.path.abspath(ticket_dir)}")
